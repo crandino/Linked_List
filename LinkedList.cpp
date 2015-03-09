@@ -31,23 +31,38 @@ void SList::add(int _value) {
 		start = new_node;
 }
 
-//void SList::del(node *_node) {
-void SList::del(int _value) {
-	
-	if (start != NULL) 
+const node* SList::getNodeAtPos(int _pos) const
+{
+	if (start != NULL && _pos >= 0 && _pos <= count() ) {
+		node* tmp = start;
+		int pos_counter = 0;
+		while (pos_counter != _pos)
 		{
-		node *tmp = start;
-		if (tmp->value != _value)
-		{
-			while (tmp->next->value != _value)
-				tmp = tmp->next;
-			tmp->next = tmp->next->next;
+			tmp = tmp->next;
+			pos_counter++;
+		}
+		return tmp;
+	}
+	else
+		return NULL;
+}
 
-		}
-		else 
+void SList::del(const node *_node) {
+	
+	if (_node != NULL && start != NULL)
+	{
+		if (_node != start)
 		{
-			start = tmp->next;
-			delete tmp;
+			node *tmp = start;
+			while (tmp->next != _node)
+				tmp = tmp->next;
+			tmp->next = _node->next;
 		}
+		else
+		{
+			start = start->next;
+		}
+		delete _node;
+		
 	}
 }

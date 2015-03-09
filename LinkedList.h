@@ -14,9 +14,9 @@ private:
 public:
 	SList();
 	void add(int);
-	//void del(node *n);
-	void del(int);
+	void del(const node *n);
 	unsigned int count() const;
+	const node* getNodeAtPos(int _pos) const;
 };
 
 #endif __LINKEDLIST_H__
