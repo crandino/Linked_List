@@ -31,9 +31,11 @@ void SList::add(int _value) {
 		start = new_node;
 }
 
-const node* SList::getNodeAtPos(int _pos) const
+node* SList::getNodeAtPos(int _pos) const
 {
-	if (start != NULL && _pos >= 0 && _pos <= count() ) {
+	// Node 1 is zero, node 2 is one, etc.
+	if (start != NULL && _pos >= 0 && _pos < count())
+	{
 		node* tmp = start;
 		int pos_counter = 0;
 		while (pos_counter != _pos)
@@ -47,7 +49,10 @@ const node* SList::getNodeAtPos(int _pos) const
 		return NULL;
 }
 
-void SList::del(const node *_node) {
+void SList::del(node *_node) {
+
+	// Si el nodo no existe, petará.
+	// Puede mejorarse añadiendo un booleano que indique error o no.
 	
 	if (_node != NULL && start != NULL)
 	{
@@ -59,10 +64,25 @@ void SList::del(const node *_node) {
 			tmp->next = _node->next;
 		}
 		else
-		{
 			start = start->next;
-		}
 		delete _node;
-		
+	}
+}
+
+void SList::delAll() {
+
+	// Hacerla booleana. Este método lo podría llamar el destructor
+	// de la clase.
+
+	if (start != NULL)
+	{
+		while (start->next != NULL)
+		{
+			node* node_to_delete = start;
+			start = start->next;
+			delete node_to_delete;
+		}
+		delete start;
+		start = NULL;
 	}
 }
