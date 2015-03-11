@@ -64,11 +64,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="DList.h" />
+    <ClInclude Include="SList.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Visual Studio 2013\Projects\Point_2D\CodeStyle.txt" />
