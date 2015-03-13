@@ -1,12 +1,7 @@
 #ifndef __SLIST_H__
 #define __SLIST_H__
 
-/* Modificar la clase para que acepte int, float, double, punteros a lo que sea...
-   Para casa:
-   - Hacer otra lista, donde el nodo tendrá dos punteros, apuntando hacia delante 
-   y hacia atrás. El primero hacia atrás apuntará a NULL, al igual que el último 
-   hacia delante. Repetir todos los métodos: add y delete se verán modificados bastante.
- */
+/* Modificar la clase para que acepte int, float, double, punteros a lo que sea... */
 
 struct node {
 	int value;
@@ -69,7 +64,7 @@ public:
 			return NULL;
 	}
 
-	void del(node *_node) {
+	bool del(node *_node) {
 
 		// Si el nodo no existe, petará.
 		// Puede mejorarse añadiendo un booleano que indique error o no.
@@ -80,13 +75,20 @@ public:
 			{
 				node *tmp = start;
 				while (tmp->next != _node)
+				{
+					if (tmp->next == NULL)
+						return false;
 					tmp = tmp->next;
+				}
+				
 				tmp->next = _node->next;
 			}
 			else
 				start = start->next;
 			delete _node;
+			return true;
 		}
+		return false;
 	}
 
 	void delAll() {

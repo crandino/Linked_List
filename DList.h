@@ -102,9 +102,10 @@ public:
 				tmp = tmp->next;
 				node_num++;
 			}	
+			printf("%s\n", "--------------------------------");
 		}
 		else
-			printf("%s", "Empty Double Linked List");
+			printf("%s\n", "Empty Double Linked List");
 	}
 
 };
