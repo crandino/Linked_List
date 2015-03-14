@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Linked_List", "Linked_List.vcxproj", "{CD44C542-3E5B-4B01-B30D-04CB35D7E8EF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest1", "..\UnitTest1\UnitTest1.vcxproj", "{84BA3D3C-A7D8-47B4-8A1C-224C49B1F98E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest1", "UnitTest1\UnitTest1.vcxproj", "{7EAE095B-4BD3-4E03-B48A-0E2C522566B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{CD44C542-3E5B-4B01-B30D-04CB35D7E8EF}.Debug|Win32.Build.0 = Debug|Win32
 		{CD44C542-3E5B-4B01-B30D-04CB35D7E8EF}.Release|Win32.ActiveCfg = Release|Win32
 		{CD44C542-3E5B-4B01-B30D-04CB35D7E8EF}.Release|Win32.Build.0 = Release|Win32
-		{84BA3D3C-A7D8-47B4-8A1C-224C49B1F98E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{84BA3D3C-A7D8-47B4-8A1C-224C49B1F98E}.Debug|Win32.Build.0 = Debug|Win32
-		{84BA3D3C-A7D8-47B4-8A1C-224C49B1F98E}.Release|Win32.ActiveCfg = Release|Win32
-		{84BA3D3C-A7D8-47B4-8A1C-224C49B1F98E}.Release|Win32.Build.0 = Release|Win32
+		{7EAE095B-4BD3-4E03-B48A-0E2C522566B3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7EAE095B-4BD3-4E03-B48A-0E2C522566B3}.Debug|Win32.Build.0 = Debug|Win32
+		{7EAE095B-4BD3-4E03-B48A-0E2C522566B3}.Release|Win32.ActiveCfg = Release|Win32
+		{7EAE095B-4BD3-4E03-B48A-0E2C522566B3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

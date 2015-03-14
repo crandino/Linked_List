@@ -1,10 +1,16 @@
 #ifndef __DLIST_H__
 #define __DLIST_H__
 
+struct doubleNode {
+	int value;
+	doubleNode* next;
+	doubleNode* previous;
+};
+
 class DList {
 
 private:
-	node* start;
+	doubleNode* start;
 
 public:
 	DList()
@@ -15,7 +21,7 @@ public:
 	unsigned int count() const
 	{
 		unsigned int counter = 0;
-		node* tmp = start;
+		doubleNode* tmp = start;
 		while (tmp != NULL)
 		{
 			tmp = tmp->next;
@@ -26,13 +32,13 @@ public:
 
 	void add(int _value)
 	{
-		node* new_node = new node;
+		doubleNode* new_node = new doubleNode;
 		new_node->value = _value;
 		new_node->next = NULL;
 
 		if (start != NULL)
 		{
-			node* tmp = start;
+			doubleNode* tmp = start;
 			while (tmp->next != NULL)
 				tmp = tmp->next;
 			tmp->next = new_node;
@@ -45,13 +51,13 @@ public:
 		}
 	}
 
-	node* getNodeAtPos(unsigned int _pos) const
+	doubleNode* getNodeAtPos(unsigned int _pos) const
 	{
 		// Node 1 is zero, node 2 is one, etc.
 		if (start != NULL && _pos < count())
 		{
 			unsigned int pos_counter = 0;
-			node* tmp = start;
+			doubleNode* tmp = start;
 			
 			while (pos_counter != _pos)
 			{
@@ -64,13 +70,13 @@ public:
 			return NULL;
 	}
 
-	void del(node* _node)
+	void del(doubleNode* _node)
 	{
 		if (start != NULL && _node != NULL)
 		{
 			if (start != _node)
 			{
-				node* tmp = start;
+				doubleNode* tmp = start;
 				while (tmp->next != _node)
 					tmp = tmp->next;
 				tmp->next = _node->next;
@@ -89,7 +95,7 @@ public:
 	void info() const
 	{
 		if (start != NULL) {
-			node* tmp = start;
+			doubleNode* tmp = start;
 			unsigned int node_num = 1;
 			while (tmp != NULL)
 			{

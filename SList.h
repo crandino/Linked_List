@@ -3,16 +3,18 @@
 
 /* Modificar la clase para que acepte int, float, double, punteros a lo que sea... */
 
-struct node {
-	int value;
-	node* next;
-	node* previous;
+template <class TYPE1>
+struct simpleNode {
+	TYPE1 value;
+	simpleNode<TYPE1>* next;
+	simpleNode<TYPE1>* previous;
 };
 
+template <class TYPE1>
 class SList {
 
 private:
-	node* start;
+	simpleNode<TYPE1>* start;
 
 public:
 
@@ -20,9 +22,13 @@ public:
 		start = NULL;
 	}
 
+	~SList() {
+		delAll();
+	}
+
 	unsigned int count() const {
 		unsigned int counter = 0;
-		node* tmp = start;
+		simpleNode<TYPE1>* tmp = start;
 		while (tmp != NULL) {
 			tmp = tmp->next;
 			counter++;
@@ -30,14 +36,14 @@ public:
 		return counter;
 	}
 
-	void add(int _value) {
-		// A new node is being created.
-		node *new_node = new node;
+	void add(TYPE1 _value) {
+		// A new simpleNode is being created.
+		simpleNode<TYPE1>* new_node = new simpleNode<TYPE1>;
 		new_node->value = _value;
 		new_node->next = NULL;
 		// Once done, has to be added to the list.
 		if (start != NULL) {
-			node *tmp = start;
+			simpleNode<TYPE1> *tmp = start;
 			while (tmp->next != NULL)
 				tmp = tmp->next;
 			tmp->next = new_node;
@@ -46,12 +52,12 @@ public:
 			start = new_node;
 	}
 
-	node* getNodeAtPos(unsigned int _pos) const
+	simpleNode<TYPE1>* getNodeAtPos(unsigned int _pos) const
 	{
 		// Node 1 is zero, node 2 is one, etc.
 		if (start != NULL && _pos < count())
 		{
-			node* tmp = start;
+			simpleNode<TYPE1>* tmp = start;
 			int pos_counter = 0;
 			while (pos_counter != _pos)
 			{
@@ -64,7 +70,7 @@ public:
 			return NULL;
 	}
 
-	bool del(node *_node) {
+	bool del(simpleNode<TYPE1>* _node) {
 
 		// Si el nodo no existe, petará.
 		// Puede mejorarse añadiendo un booleano que indique error o no.
@@ -73,7 +79,7 @@ public:
 		{
 			if (_node != start)
 			{
-				node *tmp = start;
+				simpleNode<TYPE1> *tmp = start;
 				while (tmp->next != _node)
 				{
 					if (tmp->next == NULL)
@@ -91,7 +97,7 @@ public:
 		return false;
 	}
 
-	void delAll() {
+	bool delAll() {
 
 		// Hacerla booleana. Este método lo podría llamar el destructor
 		// de la clase.
@@ -100,13 +106,15 @@ public:
 		{
 			while (start->next != NULL)
 			{
-				node* node_to_delete = start;
+				simpleNode<TYPE1>* node_to_delete = start;
 				start = start->next;
 				delete node_to_delete;
 			}
 			delete start;
 			start = NULL;
+			return true;
 		}
+		return false;
 	}
 	
 };

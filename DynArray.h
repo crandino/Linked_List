@@ -24,8 +24,6 @@ public:
 	void Insert(int value, unsigned int position);
 	int& operator[] (unsigned int index); // Este operador tiene un dilema con el const. p[1] = 15 no puede ser const. printf("%d", p[1]) puede serlo.
 	const int& operator[] (unsigned int index) const;
-	}
-
 	
 };
 
