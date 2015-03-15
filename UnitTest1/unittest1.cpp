@@ -9,6 +9,10 @@ namespace UnitTest1
 	TEST_CLASS(UnitTest1)
 	{
 	public:
+
+		// ------------------------------------
+		// Test for SList Class
+		// ------------------------------------
 		
 		TEST_METHOD(SListConstructor)
 		{
@@ -36,6 +40,61 @@ namespace UnitTest1
 			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(0)) == true);
 			Assert::IsTrue(sl1.delAll() == true);
 		}
+		TEST_METHOD(SListGetNodeAtPos)
+		{
+			SList<int> sl1;
+
+			sl1.add(45);
+
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(0)) == true);
+			Assert::IsTrue(sl1.count() == 0);
+		}
+		TEST_METHOD(SListDel)
+		{
+			SList<float> sl1;
+
+			sl1.add(45.3f);
+
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(0)) == true);
+			Assert::IsTrue(sl1.count() == 0);
+
+			sl1.add(5.0f);
+			sl1.add(-36.87f);
+			sl1.add(0.0f);
+
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(-1)) == false);
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(3)) == false);
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(2)) == true);
+			Assert::IsTrue(sl1.count() == 2);
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(1)) == true);
+			Assert::IsTrue(sl1.del(sl1.getNodeAtPos(0)) == true);
+			Assert::IsTrue(sl1.count() == 0);
+
+		}
+		TEST_METHOD(SListDelAll)
+		{
+			SList<float> sl1;
+
+			sl1.add(45.3f);
+			sl1.add(5.0f);
+			sl1.add(-36.87f);
+			sl1.add(0.0f);
+
+			Assert::IsTrue(sl1.count() == 4);
+			Assert::IsTrue(sl1.delAll() == true);
+			Assert::IsTrue(sl1.count() == 0);
+		}
+
+		// ------------------------------------
+		// Test for DList Class
+		// ----------------------
+
+		// ------------------------------------
+		// Test for DynArray Class
+		// ------------------------------------
+	
+
+
 
 	};
 }
