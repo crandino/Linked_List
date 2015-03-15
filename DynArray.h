@@ -4,7 +4,7 @@
 template <class TYPE>
 class DynArray {
 
-public:
+private:
 
 	TYPE *data;
 	unsigned int allocated_memory;
@@ -12,28 +12,16 @@ public:
 
 	void reallocate(unsigned int _new_mem_size)
 	{
-		if (data != NULL && _new_mem_size >= num_elements)
-		{
-
-		}
-
-
-
-
-
-
-
-
 		if (data != NULL)
 		{
-			DynArray<TYPE> *tmp = new DynArray<TYPE>[allocated_memory];
+			TYPE *tmp = new TYPE[allocated_memory];
 			for (unsigned int i = 0; i < num_elements; i++)
 			{
 				tmp[i] = data[i];
 			}
 			delete[] data;
 			allocated_memory = _new_mem_size;
-			DynArray<TYPE> *data = new DynArray<TYPE>[allocated_memory];
+			data = new TYPE[allocated_memory];
 			for (unsigned int i = 0; i < num_elements; i++)
 			{
 				data[i] = tmp[i];
@@ -41,10 +29,9 @@ public:
 		}
 		else
 		{
-			delete[] data;
+			delete data;
 			allocated_memory = _new_mem_size;
-			DynArray<TYPE> *data = new DynArray<TYPE>[allocated_memory];
-			data = NULL;
+			data = new TYPE[allocated_memory];
 		}
 	}
 
@@ -59,33 +46,29 @@ public:
 
 	void pushBack(TYPE _value)
 	{
-		/*if (num_elements == allocated_memory)
-			reallocate(allocated_memory + 1);*/
-
-		if (data != NULL)
-		{
-			DynArray<TYPE> *tmp = new DynArray<TYPE>[allocated_memory -1];
-			for (unsigned int i = 0; i < num_elements; i++)
-			{
-				tmp[i] = data[i];
-			}
-			delete[] data;
-			DynArray<TYPE> *data = new DynArray<TYPE>[allocated_memory];
-			for (unsigned int i = 0; i < num_elements; i++)
-			{
-				data[i] = tmp[i];
-			}
-			data[num_elements] = _value;
-			num_elements++;
-		}
-		else {
+		if (num_elements == allocated_memory)
 			reallocate(allocated_memory + 1);
-			data = &_value;
-			num_elements++;
-		}
+
+		data[num_elements] = _value;
+		num_elements++;
 	}
 
-	int pop(); // Al borrar l'element, has de tornar una còpia. No ho pots fer de cap altra manera;
+	TYPE pop()
+	{
+		// When the element is deleted, it is necessary to return a copy of that element.
+		if (data != NULL)
+		{
+			num_elements--;
+			TYPE element_to_return = data[num_elements];
+			if (num_elements == 0)
+				data = NULL;
+						
+			return element_to_return;
+		}
+		return -1;
+	}
+
+
 	void Insert(int value, unsigned int position);
 	int& operator[] (unsigned int index); // Este operador tiene un dilema con el const. p[1] = 15 no puede ser const. printf("%d", p[1]) puede serlo.
 	const int& operator[] (unsigned int index) const;
