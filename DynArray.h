@@ -1,6 +1,8 @@
 #ifndef __DYNARRAY_H__
 #define __DYNARRAY_H__
 
+#include "Utilities.h"
+
 template <class TYPE>
 class DynArray {
 
@@ -60,18 +62,68 @@ public:
 		{
 			num_elements--;
 			TYPE element_to_return = data[num_elements];
-			if (num_elements == 0)
-				data = NULL;
-						
+			/*if (num_elements == 0)
+				data = NULL;*/						
 			return element_to_return;
 		}
 		return -1;
 	}
 
 
-	void Insert(int value, unsigned int position);
-	int& operator[] (unsigned int index); // Este operador tiene un dilema con el const. p[1] = 15 no puede ser const. printf("%d", p[1]) puede serlo.
-	const int& operator[] (unsigned int index) const;
+	bool insert(int _value, unsigned int _position)
+	{
+		if (_position <= num_elements)
+		{
+			TYPE *tmp = new TYPE[allocated_memory];
+			for (unsigned int i = 0; i < num_elements; i++)
+			{
+				tmp[i] = data[i];
+			}
+			
+			if (num_elements == allocated_memory)
+				reallocate(allocated_memory + 1);
+			
+			for (unsigned int i = 0; i < _position; i++)
+			{
+				data[i] = tmp[i];
+			}
+			data[_position] = _value;
+			for (unsigned int i = _position; i < num_elements; i++)
+			{
+				data[i + 1] = tmp[i];
+			}
+			num_elements++;
+			return true;
+
+		}
+		return false;
+	}
+
+	void info() const
+	{
+		for (int i = 0; i < num_elements; i++)
+		{
+			printf("%s %d => %d\n", "Position", i, data[i]);
+		}
+		printf("%s: %d\n", "Number of elements", num_elements);
+		printf("%s: %d\n\n", "Allocated memory", allocated_memory);
+	}
+
+
+	int& operator[] (unsigned int index)
+	{
+		// Este operador tiene un dilema con el const. p[1] = 15 no puede ser const. printf("%d", p[1]) puede serlo.
+		printf("%s\n", "Este no es constante");
+		if (index < allocated_memory)
+			return data[index];	
+	}
+		
+	const int& operator[] (unsigned int index) const
+	{
+		printf("%s\n", "Este es constante");
+		if (index < allocated_memory)
+			return data[index];
+	}
 
 	unsigned int getMemory() const
 	{
