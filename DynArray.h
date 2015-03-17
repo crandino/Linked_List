@@ -1,6 +1,7 @@
 #ifndef __DYNARRAY_H__
 #define __DYNARRAY_H__
 
+#include <assert.h> 
 #include "Utilities.h"
 
 template <class TYPE>
@@ -31,7 +32,7 @@ private:
 		}
 		else
 		{
-			delete data;
+			delete[] data;
 			allocated_memory = _new_mem_size;
 			data = new TYPE[allocated_memory];
 		}
@@ -58,6 +59,7 @@ public:
 	TYPE pop()
 	{
 		// When the element is deleted, it is necessary to return a copy of that element.
+		// Cuidado con num_elements, que no sea cero y le restemos uno más.
 		if (data != NULL)
 		{
 			num_elements--;
@@ -68,7 +70,6 @@ public:
 		}
 		return -1;
 	}
-
 
 	bool insert(int _value, unsigned int _position)
 	{
@@ -94,7 +95,6 @@ public:
 			}
 			num_elements++;
 			return true;
-
 		}
 		return false;
 	}
@@ -108,21 +108,19 @@ public:
 		printf("%s: %d\n", "Number of elements", num_elements);
 		printf("%s: %d\n\n", "Allocated memory", allocated_memory);
 	}
-
-
+	
 	int& operator[] (unsigned int index)
 	{
-		// Este operador tiene un dilema con el const. p[1] = 15 no puede ser const. printf("%d", p[1]) puede serlo.
-		printf("%s\n", "Este no es constante");
-		if (index < allocated_memory)
-			return data[index];	
+		// For p[1] = 15;
+		assert (index < num_elements);
+		return data[index];
 	}
 		
 	const int& operator[] (unsigned int index) const
 	{
-		printf("%s\n", "Este es constante");
-		if (index < allocated_memory)
-			return data[index];
+		// For printf("%d", p[1]);
+		assert (index < num_elements);
+		return data[index];
 	}
 
 	unsigned int getMemory() const
@@ -134,7 +132,6 @@ public:
 	{
 		return num_elements;
 	}
-	
 };
 
 
