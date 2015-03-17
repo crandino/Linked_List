@@ -2,7 +2,6 @@
 #define __DYNARRAY_H__
 
 #include <assert.h> 
-#include "Utilities.h"
 
 template <class TYPE>
 class DynArray {
@@ -59,13 +58,10 @@ public:
 	TYPE pop()
 	{
 		// When the element is deleted, it is necessary to return a copy of that element.
-		// Cuidado con num_elements, que no sea cero y le restemos uno más.
-		if (data != NULL)
+		if (data != NULL && num_elements != 0)
 		{
 			num_elements--;
-			TYPE element_to_return = data[num_elements];
-			/*if (num_elements == 0)
-				data = NULL;*/						
+			TYPE element_to_return = data[num_elements];					
 			return element_to_return;
 		}
 		return -1;
@@ -99,6 +95,8 @@ public:
 		return false;
 	}
 
+	// Auxiliar method useful to represent all the information.
+	// It won't have its correspoding Unittest test. 
 	void info() const
 	{
 		for (int i = 0; i < num_elements; i++)

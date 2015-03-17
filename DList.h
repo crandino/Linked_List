@@ -1,16 +1,18 @@
 #ifndef __DLIST_H__
 #define __DLIST_H__
 
+template <class TYPE>
 struct doubleNode {
-	int value;
-	doubleNode* next;
-	doubleNode* previous;
+	TYPE value;
+	doubleNode<TYPE>* next;
+	doubleNode<TYPE>* previous;
 };
 
+template <class TYPE>
 class DList {
 
 private:
-	doubleNode* start;
+	doubleNode<TYPE>* start;
 
 public:
 	DList()
@@ -21,7 +23,7 @@ public:
 	unsigned int count() const
 	{
 		unsigned int counter = 0;
-		doubleNode* tmp = start;
+		doubleNode<TYPE>* tmp = start;
 		while (tmp != NULL)
 		{
 			tmp = tmp->next;
@@ -30,15 +32,15 @@ public:
 		return counter;
 	}
 
-	void add(int _value)
+	void add(TYPE _value)
 	{
-		doubleNode* new_node = new doubleNode;
+		doubleNode<TYPE>* new_node = new doubleNode<TYPE>;
 		new_node->value = _value;
 		new_node->next = NULL;
 
 		if (start != NULL)
 		{
-			doubleNode* tmp = start;
+			doubleNode<TYPE>* tmp = start;
 			while (tmp->next != NULL)
 				tmp = tmp->next;
 			tmp->next = new_node;
@@ -51,13 +53,13 @@ public:
 		}
 	}
 
-	doubleNode* getNodeAtPos(unsigned int _pos) const
+	doubleNode<TYPE>* getNodeAtPos(unsigned int _pos) const
 	{
 		// Node 1 is zero, node 2 is one, etc.
 		if (start != NULL && _pos < count())
 		{
 			unsigned int pos_counter = 0;
-			doubleNode* tmp = start;
+			doubleNode<TYPE>* tmp = start;
 			
 			while (pos_counter != _pos)
 			{
@@ -66,17 +68,16 @@ public:
 			}
 			return tmp;
 		}
-		else
-			return NULL;
+		return NULL;
 	}
 
-	void del(doubleNode* _node)
+	bool del(doubleNode<TYPE>* _node)
 	{
 		if (start != NULL && _node != NULL)
 		{
 			if (start != _node)
 			{
-				doubleNode* tmp = start;
+				doubleNode<TYPE>* tmp = start;
 				while (tmp->next != _node)
 					tmp = tmp->next;
 				tmp->next = _node->next;
@@ -85,17 +86,40 @@ public:
 			}
 			else
 			{
-				start = _node->next;
-				_node->next->previous = NULL;
+				if (_node->next != NULL)
+				{
+					start = _node->next;
+					_node->next->previous = NULL;
+				}
+				else
+					start = NULL;
 			}
 			delete _node;
+			return true;
 		}
+		return false;
+	}
+
+	bool delAll() {
+
+		if (start != NULL)
+		{
+			while (start->next != NULL)
+			{
+				doubleNode<TYPE>* node_to_delete = start;
+				start = start->next;
+				delete node_to_delete;
+			}
+			start = NULL;
+			return true;
+		}
+		return false;
 	}
 
 	void info() const
 	{
 		if (start != NULL) {
-			doubleNode* tmp = start;
+			doubleNode<TYPE>* tmp = start;
 			unsigned int node_num = 1;
 			while (tmp != NULL)
 			{
