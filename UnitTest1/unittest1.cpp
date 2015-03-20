@@ -134,15 +134,15 @@ namespace UnitTest1
 			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(0)) == true);
 			Assert::IsTrue(dl1.count() == 0);
 
-			/*dl1.add(5.0f);
+			dl1.add(5.0f);
 			dl1.add(-36.87f);
-			dl1.add(0.0f);*/
+			dl1.add(0.0f);
 
-			/*Assert::IsTrue(dl1.del(dl1.getNodeAtPos(-1)) == false);
+			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(-1)) == false);
 			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(3)) == false);
 			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(2)) == true);
-			Assert::IsTrue(dl1.count() == 2);
-			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(1)) == true);
+			Assert::AreEqual(dl1.count(),(unsigned int) 2);
+			/*Assert::IsTrue(dl1.del(dl1.getNodeAtPos(1)) == true);
 			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(0)) == true);
 			Assert::IsTrue(dl1.count() == 0);*/
 

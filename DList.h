@@ -79,6 +79,11 @@ public:
 			{
 				doubleNode<TYPE>* tmp = start;
 				while (tmp->next != _node)
+				{
+					tmp = tmp->next;
+					if (tmp->next == NULL)
+						return false;
+				}
 					tmp = tmp->next;
 				tmp->next = _node->next;
 				if (_node->next != NULL)

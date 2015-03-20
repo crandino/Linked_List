@@ -90,6 +90,17 @@ public:
 				data[i + 1] = tmp[i];
 			}
 			num_elements++;
+			delete[] tmp;
+			return true;
+		}
+		return false;
+	}
+
+	bool clear()
+	{
+		if (data != NULL)
+		{
+			num_elements = 0;
 			return true;
 		}
 		return false;
