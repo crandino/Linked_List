@@ -46,12 +46,12 @@ public:
 
 	~DynArray<TYPE>() { if (data != NULL) delete[] data; }
 
-	void pushBack(TYPE _value)
+	void pushBack(TYPE new_value)
 	{
 		if (num_elements == allocated_memory)
 			reallocate(allocated_memory + 1);
 
-		data[num_elements] = _value;
+		data[num_elements] = new_value;
 		num_elements++;
 	}
 
@@ -67,9 +67,9 @@ public:
 		return -1;
 	}
 
-	bool insert(int _value, unsigned int _position)
+	bool insert(int new_value, unsigned int position)
 	{
-		if (_position <= num_elements)
+		if (position <= num_elements)
 		{
 			TYPE *tmp = new TYPE[allocated_memory];
 			for (unsigned int i = 0; i < num_elements; i++)
@@ -80,12 +80,12 @@ public:
 			if (num_elements == allocated_memory)
 				reallocate(allocated_memory + 1);
 			
-			for (unsigned int i = 0; i < _position; i++)
+			for (unsigned int i = 0; i < position; i++)
 			{
 				data[i] = tmp[i];
 			}
-			data[_position] = _value;
-			for (unsigned int i = _position; i < num_elements; i++)
+			data[position] = new_value;
+			for (unsigned int i = position; i < num_elements; i++)
 			{
 				data[i + 1] = tmp[i];
 			}

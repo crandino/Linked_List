@@ -36,10 +36,10 @@ public:
 		return counter;
 	}
 
-	void add(TYPE _value) {
+	void add(TYPE new_value) {
 		// A new simpleNode is being created.
 		simpleNode<TYPE>* new_node = new simpleNode<TYPE>;
-		new_node->value = _value;
+		new_node->value = new_value;
 		new_node->next = NULL;
 		// Once done, has to be added to the list.
 		if (start != NULL) {
@@ -52,14 +52,14 @@ public:
 			start = new_node;
 	}
 
-	simpleNode<TYPE>* getNodeAtPos(unsigned int _pos) const
+	simpleNode<TYPE>* getNodeAtPos(unsigned int position) const
 	{
 		// Node 1 is zero, node 2 is one, etc.
-		if (start != NULL && _pos < count())
+		if (start != NULL && position < count())
 		{
 			simpleNode<TYPE>* tmp = start;
 			int pos_counter = 0;
-			while (pos_counter != _pos)
+			while (pos_counter != position)
 			{
 				tmp = tmp->next;
 				pos_counter++;
@@ -70,28 +70,28 @@ public:
 			return NULL;
 	}
 
-	bool del(simpleNode<TYPE>* _node) {
+	bool del(simpleNode<TYPE>* node_to_erase) {
 
 		// Si el nodo no existe, petará.
 		// Puede mejorarse añadiendo un booleano que indique error o no.
 
-		if (_node != NULL && start != NULL)
+		if (node_to_erase != NULL && start != NULL)
 		{
-			if (_node != start)
+			if (node_to_erase != start)
 			{
 				simpleNode<TYPE> *tmp = start;
-				while (tmp->next != _node)
+				while (tmp->next != node_to_erase)
 				{
 					if (tmp->next == NULL)
 						return false;
 					tmp = tmp->next;
 				}
 				
-				tmp->next = _node->next;
+				tmp->next = node_to_erase->next;
 			}
 			else
 				start = start->next;
-			delete _node;
+			delete node_to_erase;
 			return true;
 		}
 		return false;

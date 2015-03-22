@@ -65,11 +65,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Point2d.cpp" />
+    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DList.h" />
     <ClInclude Include="DynArray.h" />
+    <ClInclude Include="Point2d.h" />
     <ClInclude Include="SList.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>

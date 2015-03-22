@@ -32,10 +32,10 @@ public:
 		return counter;
 	}
 
-	void add(TYPE _value)
+	void add(TYPE new_value)
 	{
 		doubleNode<TYPE>* new_node = new doubleNode<TYPE>;
-		new_node->value = _value;
+		new_node->value = new_value;
 		new_node->next = NULL;
 
 		if (start != NULL)
@@ -53,15 +53,15 @@ public:
 		}
 	}
 
-	doubleNode<TYPE>* getNodeAtPos(unsigned int _pos) const
+	doubleNode<TYPE>* getNodeAtPos(unsigned int position) const
 	{
 		// Node 1 is zero, node 2 is one, etc.
-		if (start != NULL && _pos < count())
+		if (start != NULL && position < count())
 		{
 			unsigned int pos_counter = 0;
 			doubleNode<TYPE>* tmp = start;
 			
-			while (pos_counter != _pos)
+			while (pos_counter != position)
 			{
 				tmp = tmp->next;
 				pos_counter++;
@@ -71,35 +71,38 @@ public:
 		return NULL;
 	}
 
-	bool del(doubleNode<TYPE>* _node)
+	bool del(doubleNode<TYPE>* node_to_erase)
 	{
-		if (start != NULL && _node != NULL)
+		if (start != NULL && node_to_erase != NULL)
 		{
-			if (start != _node)
+			if (start != node_to_erase)
 			{
 				doubleNode<TYPE>* tmp = start;
-				while (tmp->next != _node)
+				while (tmp->next != node_to_erase)
 				{
 					tmp = tmp->next;
+					//We check if the node is not in the list at all.
 					if (tmp->next == NULL)
 						return false;
 				}
-					tmp = tmp->next;
-				tmp->next = _node->next;
-				if (_node->next != NULL)
-					_node->next->previous = tmp;
+				tmp->next = node_to_erase->next;
+				if (node_to_erase->next != NULL)
+					node_to_erase->next->previous = tmp;
 			}
 			else
 			{
-				if (_node->next != NULL)
+				if (start->next == NULL)
 				{
-					start = _node->next;
-					_node->next->previous = NULL;
+					start = NULL;
 				}
 				else
-					start = NULL;
+				{
+					start = start->next;
+					start->previous = NULL;
+				}
+
 			}
-			delete _node;
+			delete node_to_erase;
 			return true;
 		}
 		return false;
@@ -128,12 +131,8 @@ public:
 			unsigned int node_num = 1;
 			while (tmp != NULL)
 			{
-				printf("%s %d: %s %d | %s %p | %s %p | %s %p\n",
-					    "Number", node_num,
-						"Value", tmp->value,
-						"Node", tmp,
-						"Next", tmp->next,
-						"Previous", tmp->previous);
+				printf("%s %d : %s %f | ", "Number", node_num, "Value", tmp->value);
+				printf("%s %p | %s %p | %s %p\n", "Node", tmp, "Next", tmp->next, "Previous", tmp->previous);
 				tmp = tmp->next;
 				node_num++;
 			}	
