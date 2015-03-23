@@ -124,6 +124,23 @@ public:
 		return false;
 	}
 
+	doubleNode<TYPE>* getFirst() const 
+	{
+		return start;
+	}
+
+	doubleNode<TYPE>* getLast() const
+	{
+		if (start != NULL)
+		{
+			doubleNode<TYPE>* tmp = start;
+			while (tmp->next != NULL)
+				tmp = tmp->next;
+			return tmp;
+		}
+		return NULL;
+	}
+
 	void info() const
 	{
 		if (start != NULL) {

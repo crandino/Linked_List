@@ -398,6 +398,31 @@ namespace UnitTest1
 			Assert::IsTrue(dl1.delAll() == true);
 			Assert::IsTrue(dl1.count() == 0);
 		}
+		TEST_METHOD(DListGetFirst)
+		{
+			DList<float> dl1;
+			Assert::IsNull(dl1.getFirst());
+			Assert::IsTrue(dl1.getNodeAtPos(0) == dl1.getFirst());
+
+			dl1.add(2.0f);
+			dl1.add(3.0f);
+
+			Assert::IsNotNull(dl1.getFirst());
+			Assert::IsTrue(dl1.getNodeAtPos(0) == dl1.getFirst());
+		}
+		TEST_METHOD(DListGetLast)
+		{
+			DList<float> dl1;
+			Assert::IsNull(dl1.getLast());
+			Assert::IsTrue(dl1.getNodeAtPos(0) == dl1.getLast());
+
+			dl1.add(2.0f);
+			dl1.add(3.0f);
+
+			Assert::IsNotNull(dl1.getLast());
+			Assert::IsTrue(dl1.getNodeAtPos(1) == dl1.getLast());
+		}
+
 
 		// ------------------------------------
 		// Test for DynArray Class
