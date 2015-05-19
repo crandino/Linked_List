@@ -458,7 +458,7 @@ namespace UnitTest1
 				Assert::IsTrue(d[i] <= d[i + 1]);
 		}
 
-		TEST_METHOD(DListSortingReference)
+		/*TEST_METHOD(DListSortingReference)
 		{
 			DList<int> d;
 
@@ -482,7 +482,7 @@ namespace UnitTest1
 
 			for (unsigned int i = 0; i < d.count() - 1; i++)
 				Assert::IsTrue(d[i] <= d[i + 1]);
-		}
+		}*/
 
 
 		// ------------------------------------
@@ -492,7 +492,7 @@ namespace UnitTest1
 		{
 			DynArray<int> dyn1;
 
-			Assert::IsTrue(dyn1.getMemory() == 0);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 0);
 		}
 		TEST_METHOD(DynArrayConstruct2)
@@ -506,7 +506,7 @@ namespace UnitTest1
 		{
 			DynArray<int> dyn1;
 			dyn1.pushBack(13);
-			Assert::IsTrue(dyn1.getMemory() == 1);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 1);
 
 			DynArray<double> dyn2(1);
@@ -523,25 +523,27 @@ namespace UnitTest1
 		}
 		TEST_METHOD(DynArrayPop)
 		{
+			int a;
 			DynArray<int> dyn1;
 			dyn1.pushBack(13);
-			dyn1.pop();
-			Assert::IsTrue(dyn1.getMemory() == 1);
+			dyn1.pop(a);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 0);
-			dyn1.pop();
-			Assert::IsTrue(dyn1.getMemory() == 1);
+			dyn1.pop(a);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 0);
 
+			float b;
 			DynArray<float> dyn2;
-			Assert::IsTrue(dyn2.pop() == -1);
-			Assert::IsTrue(dyn2.getMemory() == 0);
+			Assert::IsFalse(dyn2.pop(b));
+			Assert::IsTrue(dyn2.getMemory() == 16);
 			Assert::IsTrue(dyn2.getNumElements() == 0);
 
 			DynArray<float> dyn3(6);
 			dyn3.pushBack(3);
 			dyn3.pushBack(4);
 			dyn3.pushBack(5);
-			Assert::IsTrue(dyn3.pop() == 5);
+			Assert::IsTrue(dyn3.pop(b));
 			Assert::IsTrue(dyn3.getMemory() == 6);
 			Assert::IsTrue(dyn3.getNumElements() == 2);
 		}
@@ -549,17 +551,17 @@ namespace UnitTest1
 		{
 			DynArray<int> dyn1;
 			Assert::IsTrue(dyn1.insert(13,1) == false);
-			Assert::IsTrue(dyn1.getMemory() == 0);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 0);
 			Assert::IsTrue(dyn1.insert(12, 0) == true);
-			Assert::IsTrue(dyn1.getMemory() == 1);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 1);
 			dyn1.pushBack(11);
 			dyn1.pushBack(12);
 			dyn1.pushBack(13);
 			Assert::IsTrue(dyn1.insert(12, 0) == true);
 			Assert::IsTrue(dyn1.insert(12, 2) == true);
-			Assert::IsTrue(dyn1.getMemory() == 6);
+			Assert::IsTrue(dyn1.getMemory() == 16);
 			Assert::IsTrue(dyn1.getNumElements() == 6);	
 		}
 		TEST_METHOD(DynArrayOperatorClaudator)
@@ -567,6 +569,23 @@ namespace UnitTest1
 			DynArray<int> dyn1;
 			dyn1.pushBack(8);
 			Assert::IsTrue(dyn1[0] == 8);
+		}
+
+		TEST_METHOD(DynArrayFlip)
+		{
+			DynArray<unsigned int> dyn1;
+			dyn1.pushBack(1);
+			dyn1.pushBack(2);
+			dyn1.pushBack(3);
+			dyn1.pushBack(4);
+			dyn1.pushBack(5);
+			dyn1.pushBack(6);
+			dyn1.pushBack(7);
+
+			dyn1.flip();
+			
+			for (unsigned int i = 0, j = 7; i < dyn1.getNumElements(); i++, j--)
+				Assert::AreEqual(dyn1[i], j);
 		}
 
 	};

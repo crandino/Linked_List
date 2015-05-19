@@ -3,6 +3,8 @@
 
 #include <assert.h> 
 
+#define DYN_ARRAY_BLOCK_SIZE 16
+
 template <class TYPE>
 class DynArray {
 
@@ -12,39 +14,50 @@ private:
 	unsigned int allocated_memory;
 	unsigned int num_elements;
 
-	void reallocate(unsigned int _new_mem_size)
+	void reallocate(unsigned int new_mem_size)
 	{
-		if (data != NULL)
+		TYPE *tmp = data;
+
+		allocated_memory = new_mem_size;
+		data = new TYPE[allocated_memory];
+
+		if (num_elements > allocated_memory)
+			num_elements = allocated_memory;
+
+		if (tmp != NULL)
 		{
-			TYPE *tmp = new TYPE[allocated_memory];
 			for (unsigned int i = 0; i < num_elements; i++)
-			{
-				tmp[i] = data[i];
-			}
-			delete[] data;
-			allocated_memory = _new_mem_size;
-			data = new TYPE[allocated_memory];
-			for (unsigned int i = 0; i < num_elements; i++)
-			{
 				data[i] = tmp[i];
-			}
-		}
-		else
-		{
-			delete[] data;
-			allocated_memory = _new_mem_size;
-			data = new TYPE[allocated_memory];
+
+			delete[] tmp;
 		}
 	}
 
 public:
 
-	DynArray<TYPE>() : data(NULL), allocated_memory(0), num_elements(0) {}
-	DynArray<TYPE>(unsigned int _new_memory_size) : data(NULL), num_elements(0) {
-		reallocate(_new_memory_size);
+	// Constructors
+	DynArray<TYPE>() : data(NULL), allocated_memory(0), num_elements(0)
+	{
+		reallocate(DYN_ARRAY_BLOCK_SIZE);
 	}
 
-	~DynArray<TYPE>() { if (data != NULL) delete[] data; }
+	DynArray<TYPE>(unsigned int new_memory_size) : data(NULL), num_elements(0)
+	{
+		reallocate(new_memory_size);
+	}
+
+	DynArray<TYPE>(const DynArray &array) : data(NULL), allocated_memory(0), num_elements(0)
+	{
+		reallocate(array.allocated_memory);
+		for (unsigned int i = 0; i < array.num_elements; i++)
+			pushBack(array.data[i]);
+	}
+
+
+	~DynArray<TYPE>()
+	{
+		delete[] data;
+	}
 
 	void pushBack(TYPE new_value)
 	{
@@ -55,16 +68,15 @@ public:
 		num_elements++;
 	}
 
-	TYPE pop()
+	bool pop(TYPE &value)
 	{
 		// When the element is deleted, it is necessary to return a copy of that element.
-		if (data != NULL && num_elements != 0)
+		if (data != NULL && num_elements > 0)
 		{
-			num_elements--;
-			TYPE element_to_return = data[num_elements];					
-			return element_to_return;
+			value = data[--num_elements];					
+			return true;
 		}
-		return -1;
+		return false;
 	}
 
 	bool insert(int new_value, unsigned int position)
@@ -106,6 +118,13 @@ public:
 		return false;
 	}
 
+	void flip()
+	{
+		unsigned int loops = num_elements / 2;
+		for (unsigned int i = 0; i < loops; i++)
+			swap(data[i], data[num_elements - (1 + i)]);
+	}
+
 	// Auxiliar method useful to represent all the information.
 	// It won't have its correspoding Unittest test. 
 	void info() const
@@ -118,14 +137,14 @@ public:
 		printf("%s: %d\n\n", "Allocated memory", allocated_memory);
 	}
 	
-	int& operator[] (unsigned int index)
+	TYPE& operator[] (unsigned int index)
 	{
 		// For p[1] = 15;
 		assert (index < num_elements);
 		return data[index];
 	}
 		
-	const int& operator[] (unsigned int index) const
+	const TYPE& operator[] (unsigned int index) const
 	{
 		// For printf("%d", p[1]);
 		assert (index < num_elements);
