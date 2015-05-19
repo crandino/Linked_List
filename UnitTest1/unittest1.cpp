@@ -352,7 +352,7 @@ namespace UnitTest1
 
 			Assert::IsTrue(dl1.count() == 2);
 			Assert::IsTrue(dl1.del(dl1.getNodeAtPos(0)) == true);
-			Assert::IsTrue(dl1.delAll() == true);
+			//Assert::IsTrue(dl1.clear() == true);
 		}
 		TEST_METHOD(DListGetNodeAtPos)
 		{
@@ -395,7 +395,7 @@ namespace UnitTest1
 			dl1.add(0.0f);
 
 			Assert::IsTrue(dl1.count() == 4);
-			Assert::IsTrue(dl1.delAll() == true);
+			dl1.clear();
 			Assert::IsTrue(dl1.count() == 0);
 		}
 		TEST_METHOD(DListGetFirst)
@@ -421,6 +421,67 @@ namespace UnitTest1
 
 			Assert::IsNotNull(dl1.getLast());
 			Assert::IsTrue(dl1.getNodeAtPos(1) == dl1.getLast());
+		}
+		TEST_METHOD(DListOperatorSquareBrackets)
+		{
+			DList<float> dl1;
+			dl1.add(2.0f);
+			dl1.add(3.0f);
+
+			Assert::AreEqual(dl1[0], 2.0f);
+			Assert::AreEqual(dl1[1], 3.0f);
+		}
+
+		TEST_METHOD(DListSortingCopy)
+		{
+			DList<int> d;
+
+			d.add(5);
+			d.add(4);
+			d.add(10);
+			d.add(8);
+			d.add(3);
+			d.add(3);
+			d.add(-63);
+			d.add(22);
+			d.add(0);
+			d.add(16);
+			d.add(-9);
+			d.add(-6);
+			d.add(15);
+			d.add(1);
+			d.add(0);
+
+			d.sort_copy();
+
+			for (unsigned int i = 0; i < d.count() - 1; i++)
+				Assert::IsTrue(d[i] <= d[i + 1]);
+		}
+
+		TEST_METHOD(DListSortingReference)
+		{
+			DList<int> d;
+
+			d.add(5);
+			d.add(4);
+			d.add(10);
+			d.add(8);
+			d.add(3);
+			d.add(3);
+			d.add(-63);
+			d.add(22);
+			d.add(0);
+			d.add(16);
+			d.add(-9);
+			d.add(-6);
+			d.add(15);
+			d.add(1);
+			d.add(0);
+
+			d.sort_reference();
+
+			for (unsigned int i = 0; i < d.count() - 1; i++)
+				Assert::IsTrue(d[i] <= d[i + 1]);
 		}
 
 

@@ -8,22 +8,27 @@
 
 int main(int argc, char** argv)
 {
-	DList<float> dl1;
+	DList<int> d;
 
-	dl1.add(45.3f);
+	d.add(5);
+	d.add(4);
+	d.add(10);
+	d.add(8);
+	d.add(3);
+	d.add(3);
+	d.add(-63);
+	d.add(22);
+	d.add(0);
+	d.add(16);
+	d.add(-9);
+	d.add(-6);
+	d.add(15);
+	d.add(1);
+	d.add(0);
 
-	dl1.del(dl1.getNodeAtPos(0));
-	dl1.info();
+	d.sort_reference();
 
-	dl1.add(5.0f);
-	dl1.add(-36.87f);
-	dl1.add(0.0f);
-
-	dl1.del(dl1.getNodeAtPos(-1));
-	dl1.del(dl1.getNodeAtPos(3));
-	dl1.info();
-	dl1.del(dl1.getNodeAtPos(2));
-	dl1.info();
+	d.info();
 
 	
 	system("pause");
